@@ -1,8 +1,11 @@
+<script setup>
+const emit = defineEmits(['confirm', 'cancel'])
+</script>
 <template>
     <div class="modal-container">
         <div class="modal-body">
             <span class="modal-close" @click="$emit('cancel')">🗙</span>
-            <h2>{{ question }}</h2>
+            <h2>Are You sure?</h2>
             <div class="modal-action">
                 <button class="modal-button" @click="$emit('confirm')">Confirm</button>
                 <button class="modal-button" @click="$emit('cancel')">Cancel</button>
@@ -10,15 +13,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-    props: ["question"],
-    emits: ["confirm", "cancel"],
-});
-</script>
 
 <style>
 .modal-container {

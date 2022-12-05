@@ -7,11 +7,11 @@
                     </router-link>
                 </v-app-bar>
                 <notifications />
-                <DialogsWrapper />
                 <app-navigation />
             </v-container>
             <v-main>
                 <router-view></router-view>
+                <DialogsWrapper />
             </v-main>
         <app-footer style="z-index: 10000;" class="px-0"></app-footer>
 

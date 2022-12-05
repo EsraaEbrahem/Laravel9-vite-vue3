@@ -130,6 +130,7 @@ export default {
                 ],
                 available_stock: [
                     value => !!value || 'This field is required',
+                    value => (value && this.$store.state.regex.numirecs.test(value)) || 'The field must be numeric'
                 ],
                 cost: [
                     value => !!value || 'This field is required',

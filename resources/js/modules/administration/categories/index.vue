@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <category-edit v-if="categoryToUpdate!= null" :category="categoryToUpdate" @closed="categoryToUpdate = null"
-                      @refresh="getCategories"></category-edit>
+                       @refresh="getCategories"></category-edit>
         <v-row class="mb-5">
             <v-col cols="12" sm="6">
                 <h2>Categories</h2>
@@ -12,18 +12,16 @@
         </v-row>
         <div>
             <EasyDataTable
-                v-model:server-options="serverOptions"
+                ref="dataTable"
                 :headers="headers"
                 :items="categories"
-                :server-items-length="categories.length"
-                :loading="loading"
-                buttons-pagination
+                :rows-per-page="10"
             >
-                <template v-slot:item.actions="{item}">
-                    <div class="clickable_action" @click="updateCategory(item)">
+                <template #item-actions="{id}">
+                    <div class="clickable_action" @click="updateCategory(id)">
                         Edit
                     </div>
-                    <div class="clickable_action" @click="deleteCategory(item.id, item.name)">
+                    <div class="clickable_action" @click="deleteCategory(id)">
                         Delete
                     </div>
                 </template>
@@ -36,6 +34,7 @@ import {deleteCategoryApi, getCategoriesApi} from "@/services/categories-service
 import CategoryCreate from "./create.vue";
 import CategoryEdit from "./edit.vue";
 import ConfirmDialog from "@/shared/confirm-dialog.vue";
+import {createConfirmDialog} from "vuejs-confirm-dialog";
 
 export default {
     name: "categories-index",
@@ -65,34 +64,29 @@ export default {
                     value: 'actions',
                     sortable: false
                 }
-            ],
-            serverOptions: {
-                page: 1,
-                rowsPerPage: 10,
-            },
+            ]
         }
     },
     methods: {
         async getCategories() {
             this.loading = true;
-            let response = await getCategoriesApi({page: this.serverOptions.page});
+            let response = await getCategoriesApi();
             if (response.status === 200)
                 this.categories = response.data;
-
-            this.$notify(response.statusText);
+            else
+                this.$notify(response.statusText);
             this.loading = false;
         },
-        async deleteCategory(categoryId, categoryName) {
-            const {onConfirm} = this.createConfirmDialog(ConfirmDialog, {
-                question: "Are you sure you want to delete " + categoryName + "?",
-            });
-            onConfirm(() => {
-                let response = deleteCategoryApi(categoryId);
+        deleteCategory(categoryId) {
+            const dialog = createConfirmDialog(ConfirmDialog)
+            dialog.onConfirm(async () => {
+                let response = await deleteCategoryApi(categoryId);
                 if (response.status === 200) {
-                    this.getCategories();
+                    await this.getCategories();
                 }
                 this.$notify(response.statusText);
-            });
+            })
+            dialog.reveal();
         },
         updateCategory(category) {
             this.categoryToUpdate = category;

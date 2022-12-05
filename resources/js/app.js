@@ -1,6 +1,12 @@
 import './bootstrap';
 import '../css/app.css';
 
+
+import Vue3EasyDataTable from "vue3-easy-data-table";
+import "vue3-easy-data-table/dist/style.css";
+
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
 import {createApp} from 'vue';
 import Router from "@/helpers/router.js";
 import Store from "@/helpers/store.js";
@@ -13,10 +19,6 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 import * as ConfirmDialog from 'vuejs-confirm-dialog';
 import Notifications from '@kyvg/vue3-notification'
-
-import Vue3EasyDataTable from "vue3-easy-data-table";
-import "vue3-easy-data-table/dist/style.css";
-
 
 import App from '@/app.vue';
 

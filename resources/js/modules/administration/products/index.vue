@@ -12,18 +12,16 @@
         </v-row>
         <div>
             <EasyDataTable
-                v-model:server-options="serverOptions"
+                ref="dataTable"
                 :headers="headers"
                 :items="products"
-                :server-items-length="products.length"
-                :loading="loading"
-                buttons-pagination
+                :rows-per-page="10"
             >
-                <template v-slot:item.actions="{item}">
-                    <div class="clickable_action" @click="updateProduct(item)">
+                <template #item-actions="{id}">
+                    <div class="clickable_action" @click="updateProduct(id)">
                         Edit
                     </div>
-                    <div class="clickable_action" @click="deleteProduct(item.id, item.name)">
+                    <div class="clickable_action" @click="deleteProduct(id)">
                         Delete
                     </div>
                 </template>
@@ -36,6 +34,7 @@ import {deleteProductApi, getProductsApi} from "@/services/products-services.js"
 import ProductCreate from "./create.vue";
 import ProductEdit from "./edit.vue";
 import ConfirmDialog from "@/shared/confirm-dialog.vue";
+import {createConfirmDialog} from "vuejs-confirm-dialog";
 
 export default {
     name: "products-index",
@@ -76,33 +75,28 @@ export default {
                     sortable: false
                 }
             ],
-            serverOptions: {
-                page: 1,
-                rowsPerPage: 10,
-            },
         }
     },
     methods: {
         async getProducts() {
             this.loading = true;
-            let response = await getProductsApi({page: this.serverOptions.page});
+            let response = await getProductsApi();
             if (response.status === 200)
                 this.products = response.data;
-
-            this.$notify(response.statusText);
+            else
+                this.$notify(response.statusText);
             this.loading = false;
         },
-        async deleteProduct(productId, productName) {
-            const {onConfirm} = this.createConfirmDialog(ConfirmDialog, {
-                question: "Are you sure you want to delete " + productName + "?",
-            });
-            onConfirm(() => {
-                let response = deleteProductApi(productId);
+        deleteProduct(productId) {
+            const dialog = createConfirmDialog(ConfirmDialog)
+            dialog.onConfirm(async () => {
+                let response = await deleteProductApi(productId);
                 if (response.status === 200) {
-                    this.getProducts();
+                    await this.getProducts();
                 }
                 this.$notify(response.statusText);
-            });
+            })
+            dialog.reveal();
         },
         updateProduct(product) {
             this.productToUpdate = product;

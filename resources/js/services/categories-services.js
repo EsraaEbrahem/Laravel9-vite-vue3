@@ -1,9 +1,7 @@
 import axios from "axios";
 
-export async function getCategoriesApi(params = {
-    page: 1
-}) {
-    return await axios.get('/categories?page=' + params.page);
+export async function getCategoriesApi() {
+    return await axios.get('/categories');
 }
 
 

@@ -7,14 +7,11 @@
         </v-row>
         <div>
             <EasyDataTable
-                v-model:server-options="serverOptions"
+                ref="dataTable"
                 :headers="headers"
                 :items="orders"
-                :server-items-length="orders.length"
-                :loading="loading"
-                buttons-pagination
-            >
-            </EasyDataTable>
+                :rows-per-page="10"
+            />
         </div>
     </v-container>
 </template>
@@ -52,17 +49,8 @@ export default {
                     text: "Status",
                     value: "status",
                     sortable: true
-                },
-                {
-                    text: 'Actions',
-                    value: 'actions',
-                    sortable: false
                 }
             ],
-            serverOptions: {
-                page: 1,
-                rowsPerPage: 10,
-            },
         }
     },
     methods: {
@@ -71,8 +59,8 @@ export default {
             let response = await getOrdersApi({page: this.serverOptions.page});
             if (response.status === 200)
                 this.orders = response.data;
-
-            this.$notify(response.statusText);
+            else
+                this.$notify(response.statusText);
             this.loading = false;
         },
     },

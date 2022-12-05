@@ -18,9 +18,7 @@
                                     v-model="categoryToUpdate.name"
                                     :rules="validation.name"
                                     label="Category Name"
-                                    :error-messages="server_validation_errors.name"
                                 >
-
                                 </v-text-field>
                             </v-col>
                             <v-col cols="6">
@@ -68,9 +66,6 @@ export default {
                     value => !!value || 'This field is required'
                 ]
             },
-            server_validation_errors: {
-                name: '',
-            },
             disableEditBtn: false,
         }
     },
@@ -116,7 +111,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

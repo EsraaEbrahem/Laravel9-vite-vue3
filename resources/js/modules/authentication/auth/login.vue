@@ -80,7 +80,11 @@ export default {
                     let user = response.data;
                     setAxiosConfigurations(user.access_token);
                     this.$store.commit('setUser', user);
-                    this.$router.push({name: "products"});
+                    console.log(user.is_admin)
+                    if(user.is_admin)
+                        this.$router.push({name: "categories"});
+                    else
+                        this.$router.push({name: "home"});
                     this.$notify(response.statusText);
                 }
             } catch (error) {

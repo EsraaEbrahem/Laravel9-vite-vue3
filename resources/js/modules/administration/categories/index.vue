@@ -18,12 +18,14 @@
                 :rows-per-page="10"
             >
                 <template #item-actions="{id}">
-                    <div class="clickable_action" @click="updateCategory(id)">
-                        Edit
-                    </div>
-                    <div class="clickable_action" @click="deleteCategory(id)">
-                        Delete
-                    </div>
+                    <v-row class="mx-auto">
+                        <div class="clickable_action" @click="updateCategory(id)">
+                            <v-icon color="green">mdi-pencil</v-icon>
+                        </div>
+                        <div class="clickable_action" @click="deleteCategory(id)">
+                            <v-icon color="red">mdi-close</v-icon>
+                        </div>
+                    </v-row>
                 </template>
             </EasyDataTable>
         </div>

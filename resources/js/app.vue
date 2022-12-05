@@ -1,18 +1,16 @@
 <template>
     <v-app>
-            <v-container>
-                <v-app-bar :elevation="2" class="mb-5">
-                    <router-link to="/">
-                        UMG-E-Commerce
-                    </router-link>
-                </v-app-bar>
-                <notifications />
-                <app-navigation />
-            </v-container>
-            <v-main>
-                <router-view></router-view>
-                <DialogsWrapper />
-            </v-main>
+        <v-container>
+            <v-app-bar :elevation="1">
+                UMG-E-Commerce
+            </v-app-bar>
+            <notifications/>
+            <app-navigation/>
+        </v-container>
+        <v-main>
+            <router-view></router-view>
+            <DialogsWrapper/>
+        </v-main>
         <app-footer style="z-index: 10000;" class="px-0"></app-footer>
 
     </v-app>
@@ -29,7 +27,7 @@ export default {
     mounted() {
         if (this.$store.getters.isLogged) {
             setAxiosConfigurations(this.$store.getters.token);
-        }else {
+        } else {
             setAxiosConfigurations(null);
         }
     },

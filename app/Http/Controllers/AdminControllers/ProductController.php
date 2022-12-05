@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return response()->json($products);
     }
 
@@ -53,7 +54,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('category')->where('id', $id)->first();
         return response()->json($product);
     }
 
@@ -75,6 +76,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $orderDetails = OrderDetail::where('product_id', $id)->count();
+        if ($orderDetails > 0)
+            return response()->json('Cannot delete this product');
+
         $product = Product::find($id);
         $product->delete();
         return response()->json(' deleted!');

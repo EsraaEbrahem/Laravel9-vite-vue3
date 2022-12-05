@@ -1,7 +1,11 @@
 import axios from "axios";
 
 export async function getProductsApi() {
-    return await axios.get('/products?page=');
+    return await axios.get('/products');
+}
+
+export async function getHomeProductsApi(limit = 1000) {
+    return await axios.get('/home-products?limit='+limit);
 }
 
 export async function getProductByIdApi(id, params = {

@@ -18,10 +18,6 @@
             <v-card>
                 <v-card-title>
                     Create category
-                    <v-spacer></v-spacer>
-                    <div @click="show = !show" class="clickable_action">
-                        <v-icon>mdi-close</v-icon>
-                    </div>
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form" v-on:submit.prevent="addCategory">

@@ -41,7 +41,7 @@ class Product extends Model
         'rate',
         'cost',
         'available_stock',
-        'is_available',
+        'is_active',
         'created_by',
         'updated_by'
     ];

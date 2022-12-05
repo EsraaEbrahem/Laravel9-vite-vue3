@@ -25,24 +25,9 @@ const store = createStore({
         token(state) {
             return state.signedUser != undefined ? state.signedUser.access_token : '';
         },
-        hasRole(state, roles) {
+        isAdmin(state) {
             if (state.isLoggedIn) {
-                const userRoles = Object.keys(state.signedUser.user_roles);
-                return roles.some(role => userRoles.includes(role));
-            }
-            return false;
-        },
-        hasPermission(state, permission) {
-            if (state.isLoggedIn) {
-                const userPermission = state.signedUser.user_permissions;
-                return userPermission[permission] !== undefined;
-            }
-            return false;
-        },
-        canComment(state, getters, complaintOwner) {
-            const user = state.signedUser.info;
-            if (user.id === complaintOwner || getters.hasRole('موظف قسم')) {
-                return true;
+                return state.signedUser.is_admin
             }
             return false;
         }

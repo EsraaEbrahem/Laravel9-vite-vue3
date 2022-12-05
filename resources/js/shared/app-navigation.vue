@@ -5,19 +5,40 @@
                 v-if="$store.getters.isLogged && $store.getters.user != undefined"
                 prepend-icon="mdi-view-dashboard" to="profile" :title="$store.getters.user.name">
             </v-list-item>
-            <v-list-item prepend-icon="mdi-view-dashboard" to="categories" title="Categories">
+
+            <v-list-item
+                v-if="!$store.getters.isAdmin"
+                prepend-icon="mdi-view-dashboard" to="home" title="Home">
             </v-list-item>
-            <v-list-item prepend-icon="mdi-view-dashboard" to="products" title="Products">
+
+            <v-list-item
+                v-if="$store.getters.isLogged && !$store.getters.isAdmin"
+                prepend-icon="mdi-view-dashboard" to="my-orders" title="My Orders">
             </v-list-item>
-            <v-list-item prepend-icon="mdi-view-dashboard" to="orders" title="Orders">
+
+            <v-list-item
+                v-if="$store.getters.isAdmin"
+                prepend-icon="mdi-view-dashboard" to="categories" title="Categories">
             </v-list-item>
-            <v-list-item v-if="!$store.getters.isLogged"
-                         prepend-icon="mdi-view-dashboard"
-                         to="register" title="Register">
+            <v-list-item
+                v-if="$store.getters.isAdmin"
+                prepend-icon="mdi-view-dashboard" to="products" title="Products">
+            </v-list-item>
+            <v-list-item
+                v-if="$store.getters.isAdmin"
+                prepend-icon="mdi-view-dashboard" to="orders" title="Orders">
+            </v-list-item>
+            <v-list-item
+                v-if="$store.getters.isAdmin"
+                prepend-icon="mdi-view-dashboard" to="users" title="Users">
             </v-list-item>
             <v-list-item v-if="!$store.getters.isLogged"
                          prepend-icon="mdi-view-dashboard"
                          to="login" title="Login">
+            </v-list-item>
+            <v-list-item v-if="!$store.getters.isLogged"
+                         prepend-icon="mdi-view-dashboard"
+                         to="register" title="Register">
             </v-list-item>
             <v-spacer></v-spacer>
             <template v-if="$store.getters.isLogged && $store.getters.user != undefined">

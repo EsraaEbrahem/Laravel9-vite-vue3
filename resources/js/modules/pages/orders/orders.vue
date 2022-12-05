@@ -2,33 +2,28 @@
     <v-container>
         <v-row class="mb-5">
             <v-col cols="12" sm="6">
-                <h2>Users</h2>
+                <h2>Orders</h2>
             </v-col>
         </v-row>
         <div>
             <EasyDataTable
                 ref="dataTable"
                 :headers="headers"
-                :items="users"
+                :items="orders"
                 :rows-per-page="10"
-            >
-            </EasyDataTable>
+            />
         </div>
     </v-container>
 </template>
 <script>
-import {getUsersApi} from "@/services/users-services.js";
+import {getMyOrdersApi} from "@/services/orders-services.js";
 
 export default {
-    name: "users-index",
+    name: "orders-index",
     data() {
         return {
-            users: [],
+            orders: [],
             loading: false,
-            user: {
-                id: '',
-                name: ''
-            },
             headers: [
                 {
                     text: "Id",
@@ -36,31 +31,41 @@ export default {
                     sortable: true
                 },
                 {
-                    text: "Name",
-                    value: "name",
+                    text: "Ref",
+                    value: "reference_code",
                     sortable: true
                 },
                 {
-                    text: "Email",
-                    value: "email",
+                    text: "Total amount",
+                    value: "total_amount",
+                    sortable: true
+                },
+                {
+                    text: "Notes",
+                    value: "notes",
+                    sortable: true
+                },
+                {
+                    text: "Status",
+                    value: "status",
                     sortable: true
                 }
             ],
         }
     },
     methods: {
-        async getUsers() {
+        async getOrders() {
             this.loading = true;
-            let response = await getUsersApi();
+            let response = await getMyOrdersApi();
             if (response.status === 200)
-                this.users = response.data;
+                this.orders = response.data;
             else
                 this.$notify(response.statusText);
             this.loading = false;
-        }
+        },
     },
     mounted() {
-        this.getUsers();
+        this.getOrders();
     }
 }
 </script>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminControllers\CategoryController;
+use App\Http\Controllers\ClientControllers\ClientOrdersController;
+use App\Http\Controllers\ClientControllers\ClientProductsController;
 use App\Http\Controllers\AdminControllers\OrderController;
 use App\Http\Controllers\AdminControllers\ProductController;
 use App\Http\Controllers\AdminControllers\UserController;
@@ -29,6 +31,16 @@ Route::middleware('api')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('users', UserController::class);
+
+    Route::controller(ClientOrdersController::class)->group(function () {
+        Route::get('my-orders', 'myOrders');
+
+    });
+
+    Route::controller(ClientProductsController::class)->group(function () {
+        Route::get('home-products', 'index');
+
+    });
 
     Route::controller(AuthenticationController::class)->group(function () {
         Route::post('login', 'login');

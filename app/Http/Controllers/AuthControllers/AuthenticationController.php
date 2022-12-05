@@ -35,6 +35,7 @@ class AuthenticationController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'access_token' => $token,
+                'is_admin' => !!($user->name == 'admin'),
                 'user_roles' => $user->roles()->pluck('id', 'name'),
                 'user_permissions' => $user->getAllPermissions()->pluck('id', 'name'),
             ];

@@ -15,7 +15,7 @@
             ></v-btn>
         </div>
 
-        <div class="px-4 py-2 bg-black text-center w-100">
+        <div class="px-4 py-2 text-center w-100">
             {{ new Date().getFullYear() }} — <strong>UMG</strong>
         </div>
     </v-footer>

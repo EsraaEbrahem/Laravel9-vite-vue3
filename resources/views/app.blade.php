@@ -7,6 +7,7 @@
     <title>UMG-E-Commerce</title>
     <link rel="icon" href="{{asset('images/logo.png')}}">
     <!-- Fonts -->
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
     @vite('resources/css/app.css')
 </head>
 <body>

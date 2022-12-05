@@ -56,7 +56,7 @@ export default {
     methods: {
         async getOrders() {
             this.loading = true;
-            let response = await getOrdersApi({page: this.serverOptions.page});
+            let response = await getOrdersApi();
             if (response.status === 200)
                 this.orders = response.data;
             else

@@ -1,0 +1,52 @@
+:root {
+    --min-width: 290px;
+}
+
+html {
+    min-width: var(--min-width);
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #84cb83;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
+#loadingApplication {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.v-card__title {
+    background-color: #84cb83;
+    color: white;
+}
+
+.v-card__title * i {
+    color: white !important;
+}
+
+i:hover {
+    color: #84cb83 !important;
+}
+
+.clickable_action:hover, .clickable_action:hover > *, .clickable_action:hover * > i {
+    color: #84cb83 !important;
+    cursor: pointer;
+}
